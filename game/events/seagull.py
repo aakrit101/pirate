@@ -4,6 +4,7 @@ from game.context import Context
 import game.config as config
 import random
 
+
 class Seagull (Context, event.Event):
 
     def __init__ (self):

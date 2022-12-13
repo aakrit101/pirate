@@ -6,6 +6,7 @@ from game.context import Context
 from game.display import announce
 import game.config as config
 
+
 class Ship (Context):
     '''The pirate ship. Mostly handles food and sailing around the ocean map.'''
     def __init__(self):
@@ -83,6 +84,10 @@ class Ship (Context):
             crew.start_day (self)
 
     def get_food (self):
+        return self.food
+
+    def add_food (self):
+        self.food +=30
         return self.food
 
     def take_food (self, amt):

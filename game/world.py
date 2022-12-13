@@ -59,8 +59,11 @@ class World (Context):
         self.events.append (nothing.Nothing())
         self.events.append (seagull.Seagull())
         self.events.append (seagull.Seagull())
+        self.events.append (fish.CatchAFish())
         self.events.append (seagull.Seagull())
         self.events.append (sickness.Sickness())
+        self.events.append (fish.CatchAFish())
+        self.events.append (shark_attack.DangerousSharkAttack())
         self.events.append (drowned_pirates.DrownedPirates())
         self.nouns["world"] = self
 
@@ -69,8 +72,8 @@ class World (Context):
 
     def start_day (self):
         self.day = self.day + 1
-#        announce ("starting day " + str(self.day))
-        
+        # announce ("starting day " + str(self.day))
+
         if self.day > 1:
             num_events = random.randint (0,2)
             random.shuffle (self.events)

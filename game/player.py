@@ -2,7 +2,6 @@
 from re import I
 from game.ship import *
 from game.context import Context
-import jsonpickle
 from game.display import announce
 import game.config as config
 from game.items import *
@@ -54,7 +53,9 @@ class Player (Context):
         self.verbs['inventory'] = self
         self.verbs['restock'] = self
         self.verbs['skills'] = self
-
+        self.verbs['catch'] = self
+        self.verbs['ignore'] = self
+        self.verbs['sail'] = self
         self.seen = []
         for i in range (0, self.world.worldsize):
             self.seen.append ([])
@@ -62,9 +63,11 @@ class Player (Context):
                 self.seen[i].append(False)
 
 
-    def process_verb (self, verb, cmd_list, nouns):
+    def process_verb (self, verb, cmd_list, nouns=None):
         if (verb == "quit"):
             sys.exit(0)
+        elif (verb == 'catch'):
+            self.add_food()
         elif (verb == "map"):
             self.print_map ()
         elif (verb == "inventory"):
@@ -142,8 +145,15 @@ class Player (Context):
         for c in contexts:
             for k, v in c.nouns.items():
                 nouns[k] = v
-
-        cmd = input ("what is your command: ")
+        pos = [item for item in verbs]
+        user_input = ''
+        message = "what is your command:\n "
+        for index, item in enumerate(verbs):
+            message += f'{index + 1})  {item}\n'
+        message += 'Your choice: '
+        while user_input not in map(str, range(0, len(verbs) + 1)):
+            user_input = input(message)
+        cmd = pos[int(user_input) - 1]
         cmd_list = cmd.split()   # split on whitespace
 
         if(len(cmd_list) > 0):
@@ -180,11 +190,13 @@ class Player (Context):
             announce (" everyone starved!!!!!!!!!!")
             config.the_player.kill_all_pirates("died of sudden-onset starvation")
             return
-
-        
+        if (self.ship.get_food()<30):
+            print("CAPTAIN, WE HAVE SHORTAGE OF FOOD, THIS IS THE BEST TIME WE CATCH A FISH")
+            self.add_food()
         while (self.go == False):
             Player.get_interaction ([self, self.ship])
-
+    def add_food(self):
+        self.ship.food +=30
 
     def notdone (self):
         self.cleanup_pirates ()

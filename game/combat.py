@@ -129,3 +129,11 @@ class Drowned(Monster):
         #7 to 19 hp, bite attack, 65 to 85 speed (100 is "normal")
         super().__init__(name, random.randrange(7,20), attacks, 75 + random.randrange(-10,11))
 
+class Shark(Monster):
+    def __init__(self, name):
+        attacks = {}
+        attacks["bite"] = ["bites", random.randrange(35, 51), (5, 15)]
+        attacks["punch 1"] = ["punches", random.randrange(35, 51), (1, 10)]
+        attacks["punch 2"] = ["punches", random.randrange(35, 51), (1, 10)]
+        # 7 to 19 hp, bite attack, 65 to 85 speed (100 is "normal")
+        super().__init__(name, random.randrange(7, 20), attacks, 75 + random.randrange(-10, 11))

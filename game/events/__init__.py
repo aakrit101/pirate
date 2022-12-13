@@ -1,7 +1,9 @@
 
 __all__ = ["drowned_pirates",
-"lucky",
-"man_eating_monkeys",
-"nothing",
-"sickness",
-"seagull"]
+           "fish",
+           "lucky",
+           "man_eating_monkeys",
+           "nothing",
+           "shark_attack",
+           "sickness",
+           "seagull"]
